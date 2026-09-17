@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0a0a0a">
+  <title>XandBap — DJ de Arrochadeira e Funk</title>
+  <meta name="description" content="Site oficial do DJ XandBap. Arrochadeira, funk e energia de palco. Ouça os lançamentos, veja os shows e contrate para o seu evento.">
+  <meta name="author" content="XandBap">
+  <meta property="og:title" content="XandBap — DJ de Arrochadeira e Funk">
+  <meta property="og:description" content="Lançamentos, agenda e contratação do DJ XandBap.">
+  <meta property="og:image" content="assets/hero.jpg">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" type="image/png" href="assets/favicon.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Barlow+Condensed:wght@400;500;600;700&display=swap">
+
+  <style>
+    :root {
+      --background: #0a0a0a;
+      --foreground: #f5f5f4;
+      --card: #121212;
+      --primary: #e4231f;
+      --primary-dark: #a81410;
+      --primary-light: #ff4438;
+      --whatsapp: #25d366;
+      --green: #22c55e;
+      --primary-foreground: #ffffff;
+      --muted: #7a7674;
+      --border: rgba(255, 255, 255, 0.10);
+      --font-display: "Archivo Black", system-ui, sans-serif;
+      --font-sans: "Barlow Condensed", system-ui, sans-serif;
+      --max: 1180px;
+      --ease: cubic-bezier(.16,1,.3,1);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background-color: var(--background);
+      color: var(--foreground);
+      font-family: var(--font-sans);
+      font-size: 17px;
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    img, video { display: block; max-width: 100%; }
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; color: inherit; background: none; border: none; }
+
+    ::selection { background: var(--primary); color: #fff; }
+
+    .wrap { max-width: var(--max); margin: 0 auto; padding: 0 24px; }
+    @media (min-width: 768px) { .wrap { padding: 0 40px; } }
+
+    .text-primary { color: var(--primary); }
+    .text-green { color: var(--green); }
+
+    .label { display: block; font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); margin-bottom: 16px; }
+
+    .heading {
+      font-family: var(--font-display); font-size: 32px; line-height: 1.18;
+      letter-spacing: -0.01em; text-transform: uppercase;
+    }
+    @media (min-width: 768px) { .heading { font-size: 46px; } }
+
+    .lede { margin-top: 16px; max-width: 46ch; font-size: 18px; color: #c9c6c4; }
+    .center-col { margin-left: auto; margin-right: auto; }
+
+    /* ===== grain overlay ===== */
+    .grain {
+      position: fixed; inset: -100px; z-index: 250; pointer-events: none; opacity: 0.05; mix-blend-mode: overlay;
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+      background-size: 180px 180px;
+    }
+
+
+    .hover-label {
+      position: fixed; top: 0; left: 0; z-index: 401; pointer-events: none; transform: translate(-50%, -50%) scale(0.6);
+      background: var(--primary); color: #fff; font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+      padding: 10px 18px; border-radius: 100px; opacity: 0; transition: opacity .25s ease, transform .25s var(--ease); white-space: nowrap;
+    }
+    .hover-label.show { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+
+    /* ===== reveal ===== */
+    .reveal { opacity: 0; transform: translateY(14px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    /* ===== split text word reveal ===== */
+    .split-text .word { display: inline-block; overflow: hidden; vertical-align: top; padding-bottom: 0.22em; margin-bottom: -0.22em; }
+    .split-text .word span { display: inline-block; transform: translateY(115%); transition: transform 0.85s var(--ease); transition-delay: calc(var(--i, 0) * 0.055s); will-change: transform; }
+    .split-text.in .word span { transform: translateY(0); }
+
+    /* ===== image curtain reveal ===== */
+    .img-reveal { position: relative; overflow: hidden; }
+    .img-reveal img, .img-reveal video { transform: scale(1.18); transition: transform 1.3s var(--ease); }
+    .img-reveal.in img, .img-reveal.in video { transform: scale(1); }
+    .img-reveal::after { content: ""; position: absolute; inset: 0; background: var(--background); transform-origin: right; transform: scaleX(1); transition: transform 1s var(--ease); z-index: 2; }
+    .img-reveal.in::after { transform: scaleX(0); }
+
+    /* ===== buttons — FODA style ===== */
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+      padding: 16px 30px; font-family: var(--font-sans); font-weight: 700; font-size: 15px;
+      letter-spacing: 0.04em; text-transform: uppercase; border: 1px solid transparent; border-radius: 3px;
+      position: relative; overflow: hidden; isolation: isolate;
+      transition: transform .35s var(--ease), box-shadow .35s ease, background-color 0.2s ease, border-color 0.2s ease;
+    }
+    .btn-icon { width: 1.15em; height: 1.15em; flex-shrink: 0; fill: currentColor; }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary-light), var(--primary) 55%, var(--primary-dark));
+      color: #fff; border-color: rgba(255,255,255,.08);
+      box-shadow: 0 14px 30px -12px rgba(228,35,31,.6), inset 0 1px 0 rgba(255,255,255,.15);
+    }
+    .btn-primary::before {
+      content: ""; position: absolute; inset: 0; left: -75%; width: 45%; z-index: 1;
+      background: linear-gradient(115deg, transparent, rgba(255,255,255,.4), transparent);
+      transform: skewX(-20deg); transition: left .65s ease;
+    }
+    .btn-primary:hover::before { left: 130%; }
+    .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 18px 36px -10px rgba(228,35,31,.75), inset 0 1px 0 rgba(255,255,255,.2); }
+    .btn-primary:active { transform: translateY(-1px); }
+
+    .btn-ghost { background: transparent; border-color: var(--border); color: var(--foreground); }
+    .btn-ghost:hover { border-color: var(--foreground); }
+
+    .nav .btn-primary { padding: 11px 20px; font-size: 12.5px; }
+
+    /* ===== nav ===== */
+    .nav {
+      position: sticky; top: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between;
+      padding: 18px 24px; background-color: rgba(10, 10, 10, 0.85); backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+    }
+    @media (min-width: 768px) { .nav { padding: 18px 40px; } }
+    .nav-logo { display: flex; align-items: center; gap: 10px; }
+    .nav-logo img { height: 22px; width: auto; }
+    .nav-logo span { font-family: var(--font-display); font-size: 16px; letter-spacing: 0.02em; text-transform: uppercase; color: var(--foreground); }
+    .nav-links { display: none; align-items: center; gap: 36px; font-size: 14px; letter-spacing: 0.03em; color: #c9c6c4; }
+    @media (min-width: 860px) { .nav-links { display: flex; } }
+    .nav-links a { position: relative; padding: 4px 0; transition: color 0.2s ease; }
+    .nav-links a::after { content: ""; position: absolute; left: 0; bottom: 0; height: 1px; width: 0; background: var(--primary); transition: width .3s var(--ease); }
+    .nav-links a:hover, .nav-links a.active { color: var(--foreground); }
+    .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
+    .nav-right { display: flex; align-items: center; gap: 18px; }
+
+    .hamburger { display: flex; flex-direction: column; justify-content: center; gap: 5px; width: 30px; height: 30px; cursor: pointer; z-index: 260; }
+    @media (min-width: 860px) { .hamburger { display: none; } }
+    .hamburger span { display: block; width: 100%; height: 2px; background: var(--foreground); transition: transform .3s var(--ease), opacity .2s ease; }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    .mobile-menu {
+      position: fixed; inset: 0; z-index: 220; background: var(--background);
+      display: flex; flex-direction: column; justify-content: center; gap: 26px; padding: 40px 32px;
+      transform: translateY(-102%); transition: transform .55s var(--ease);
+    }
+    .mobile-menu.open { transform: translateY(0); }
+    .mobile-menu a { font-family: var(--font-display); font-size: 30px; text-transform: uppercase; }
+    .mobile-menu .btn { align-self: flex-start; margin-top: 10px; }
+    @media (min-width: 860px) { .mobile-menu { display: none; } }
+
+    /* ===== HERO ===== */
+    .hero { position: relative; display: flex; align-items: flex-end; min-height: 78svh; overflow: hidden; }
+    .hero-media { position: absolute; inset: 0; }
+    .hero-media video { width: 100%; height: 100%; object-fit: cover; object-position: center 30%; }
+    .hero-media::after {
+      content: ""; position: absolute; inset: 0;
+      background: linear-gradient(to bottom, rgba(10,10,10,.15) 0%, rgba(10,10,10,.35) 55%, rgba(10,10,10,.98) 100%);
+      z-index: 1;
+    }
+    .hero-glow { position: absolute; z-index: 1; width: 60vw; max-width: 620px; aspect-ratio: 1; border-radius: 50%; background: radial-gradient(circle, rgba(228,35,31,.35), transparent 70%); top: -10%; right: -10%; filter: blur(40px); pointer-events: none; }
+    .hero-content { position: relative; z-index: 5; width: 100%; padding: 0 24px 56px; }
+    @media (min-width: 768px) { .hero-content { padding: 0 40px 72px; } }
+    .hero-content .inner { max-width: var(--max); margin: 0 auto; }
+    .hero-kicker { font-size: 13px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--primary); margin-bottom: 18px; opacity: 0; animation: fadeUp .8s var(--ease) .1s forwards; }
+    .hero-title { font-family: var(--font-display); font-size: 36px; line-height: 1.1; letter-spacing: -0.01em; text-transform: uppercase; max-width: 720px; }
+    @media (min-width: 640px) { .hero-title { font-size: 52px; } }
+    @media (min-width: 1024px) { .hero-title { font-size: 64px; } }
+    .hero-sub { margin-top: 14px; max-width: 480px; font-size: 18px; color: #c9c6c4; opacity: 0; animation: fadeUp .8s var(--ease) .55s forwards; }
+    .hero-actions { margin-top: 26px; display: flex; flex-wrap: wrap; gap: 14px; opacity: 0; animation: fadeUp .8s var(--ease) .7s forwards; }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+
+    /* ===== marquee ===== */
+    .marquee { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); overflow: hidden; padding: 9px 0; background: var(--background); }
+    .marquee-track { display: flex; width: max-content; gap: 28px; animation: scrollLeft 26s linear infinite; }
+    .marquee-track span { font-family: var(--font-display); font-size: 13px; text-transform: uppercase; letter-spacing: 0.02em; color: var(--muted); display: flex; align-items: center; gap: 28px; white-space: nowrap; }
+    .marquee-track span i { color: var(--primary); font-style: normal; }
+    @media (min-width: 768px) { .marquee-track span { font-size: 16px; } }
+    @keyframes scrollLeft { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+    /* ===== IDENTIDADE ===== */
+    .split { display: grid; gap: 40px; padding: 72px 0; }
+    @media (min-width: 860px) { .split { grid-template-columns: 0.85fr 1fr; align-items: center; gap: 72px; } }
+    .identity-photo-wrap { aspect-ratio: 4/5; }
+    .identity-photo { width: 100%; height: 100%; object-fit: cover; object-position: top center; filter: grayscale(20%); }
+    .chip-row { margin-top: 26px; display: flex; flex-wrap: wrap; gap: 10px; }
+    .chip { padding: 9px 18px; border: 1px solid var(--border); border-radius: 100px; font-size: 13px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; transition: border-color .25s ease, color .25s ease; }
+    .chip:hover { border-color: var(--primary); color: var(--primary); }
+
+    /* ===== carousel (lançamentos + palco) ===== */
+    .section-alt { background-color: var(--card); }
+    .section-pad { padding: 72px 0; }
+
+    .carousel-head { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 14px; }
+    .drag-hint { font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); display: flex; align-items: center; gap: 8px; }
+    .drag-hint svg { width: 15px; height: 15px; animation: nudge 1.6s ease-in-out infinite; }
+    @keyframes nudge { 0%, 100% { transform: translateX(0); opacity: .5; } 50% { transform: translateX(5px); opacity: 1; } }
+
+    .carousel-outer { position: relative; margin-top: 32px; margin-left: -24px; margin-right: -24px; }
+    @media (min-width: 768px) { .carousel-outer { margin-left: -40px; margin-right: -40px; } }
+    .carousel-outer::before, .carousel-outer::after {
+      content: ""; position: absolute; top: 0; bottom: 0; width: 40px; z-index: 3; pointer-events: none;
+    }
+    .carousel-outer::before { left: 0; background: linear-gradient(to right, var(--background), transparent); }
+    .carousel-outer::after { right: 0; background: linear-gradient(to left, var(--background), transparent); }
+    .section-alt .carousel-outer::before { background: linear-gradient(to right, var(--card), transparent); }
+    .section-alt .carousel-outer::after { background: linear-gradient(to left, var(--card), transparent); }
+
+    .carousel {
+      display: flex; gap: 18px; overflow-x: auto; scroll-snap-type: x proximity; cursor: grab;
+      -webkit-overflow-scrolling: touch; scrollbar-width: none; padding: 4px 24px 14px;
+      user-select: none;
+    }
+    @media (min-width: 768px) { .carousel { padding: 4px 40px 14px; } }
+    .carousel::-webkit-scrollbar { display: none; }
+    .carousel.grabbing { cursor: grabbing; scroll-snap-type: none; }
+
+    .release-card {
+      scroll-snap-align: start; flex: 0 0 auto; width: min(76vw, 300px);
+      display: flex; flex-direction: column; background-color: #171717;
+      border: 1px solid var(--border); border-radius: 6px; overflow: hidden;
+      transition: border-color 0.25s ease, transform 0.25s ease;
+    }
+    a.release-card:hover { border-color: #3a3a3a; transform: translateY(-4px); }
+    .release-cover-wrap { position: relative; }
+    .release-cover { aspect-ratio: 1/1; width: 100%; height: auto; object-fit: cover; transition: transform 0.5s var(--ease); pointer-events: none; }
+    a.release-card:hover .release-cover { transform: scale(1.04); }
+    .release-cover.pending { filter: grayscale(1) brightness(.55); }
+    .release-pending-label {
+      position: absolute; top: 14px; left: 14px; z-index: 2; background: rgba(10,10,10,.75); backdrop-filter: blur(4px);
+      padding: 7px 14px; border-radius: 100px; font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .release-pending-label::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--primary); animation: pulse 1.6s ease-in-out infinite; }
+    @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: .4; transform: scale(1.4); } }
+    .release-info { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 18px; }
+    .release-title { font-size: 16px; font-weight: 700; text-transform: uppercase; }
+    .release-type { margin-top: 4px; font-size: 12px; letter-spacing: 0.08em; color: var(--muted); }
+    .release-cta { flex-shrink: 0; font-size: 12px; font-weight: 700; letter-spacing: 0.08em; color: var(--primary); }
+
+    .social-buttons { margin-top: 8px; display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }
+    .social-btn {
+      padding: 12px 28px; border: 1px solid var(--border); border-radius: 100px;
+      font-size: 13px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+      transition: border-color .25s ease, color .25s ease;
+    }
+    .social-btn:hover { border-color: var(--primary); color: var(--primary); }
+
+    /* ===== NO PALCO (centralizado) ===== */
+    .palco-section { text-align: center; }
+    .palco-section.section-pad { padding-bottom: 0; }
+    .palco-section .lede { margin-left: auto; margin-right: auto; }
+    .stats-row {
+      margin: 36px auto 0; display: inline-grid; grid-template-columns: 1fr 1fr; max-width: 480px;
+      border-top: 1px solid var(--border); border-left: 1px solid var(--border);
+    }
+    .stat { padding: 22px 34px; border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .stat-num { font-family: var(--font-display); font-size: 34px; }
+    .stat-label { margin-top: 6px; font-size: 13px; letter-spacing: 0.06em; color: var(--muted); text-transform: uppercase; }
+
+    .motion-card { scroll-snap-align: start; flex: 0 0 auto; width: min(58vw, 220px); }
+    .motion-item { position: relative; border: 1px solid var(--border); border-radius: 6px; overflow: hidden; transition: border-color 0.2s ease; }
+    .motion-item:hover { border-color: #3a3a3a; }
+    .motion-item video { aspect-ratio: 9/16; width: 100%; object-fit: cover; pointer-events: none; }
+
+    /* ===== CONTRATAÇÃO ===== */
+    .hire-section { position: relative; padding: 32px 0 72px; text-align: center; border-top: 1px solid var(--border); overflow: hidden; }
+    .hire-glow { position: absolute; left: 50%; top: 50%; width: 70vw; max-width: 640px; aspect-ratio: 1; border-radius: 50%; background: radial-gradient(circle, rgba(228,35,31,.18), transparent 70%); transform: translate(-50%, -50%); pointer-events: none; z-index: 0; }
+    .hire-section > * { position: relative; z-index: 1; }
+    .hire-section > .hire-glow { position: absolute; z-index: 0; }
+    .hire-section .heading { font-size: 34px; }
+    @media (min-width: 768px) { .hire-section .heading { font-size: 54px; } }
+    .hire-section .lede { margin-left: auto; margin-right: auto; }
+    .hire-actions { margin-top: 28px; display: flex; flex-wrap: wrap; justify-content: center; gap: 14px; }
+
+    /* ===== footer ===== */
+    footer { border-top: 1px solid var(--border); padding: 30px 0 34px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; }
+    .footer-brand { display: flex; align-items: center; gap: 10px; }
+    footer img { height: 20px; width: auto; opacity: 0.8; }
+    .footer-brand span { font-family: var(--font-display); font-size: 15px; letter-spacing: 0.02em; text-transform: uppercase; color: var(--foreground); opacity: 0.85; }
+    footer p { font-size: 13px; letter-spacing: 0.05em; color: var(--muted); }
+
+    .credit { padding: 20px 0 90px; display: flex; align-items: center; justify-content: center; gap: 7px; font-size: 13px; color: var(--muted); border-top: 1px solid var(--border); }
+    .credit svg { width: 15px; height: 15px; fill: var(--muted); transition: fill .2s ease; }
+    .credit a { display: inline-flex; align-items: center; gap: 7px; font-weight: 600; transition: opacity .2s ease; }
+    .credit a:hover { opacity: .8; }
+    .credit a:hover svg { fill: var(--green); }
+
+    /* ===== fixed WhatsApp bubble ===== */
+    .fixed-whatsapp {
+      position: fixed; right: 22px; bottom: 22px; z-index: 200; width: 58px; height: 58px; border-radius: 50%;
+      background: var(--whatsapp); display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 10px 26px rgba(0,0,0,.45); opacity: 0;
+      pointer-events: none; transition: opacity .7s ease;
+    }
+    .fixed-whatsapp.visible { opacity: 1; pointer-events: auto; }
+    .fixed-whatsapp svg { width: 28px; height: 28px; fill: #fff; }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .split-text .word span, .reveal, .img-reveal::after, .img-reveal img, .img-reveal video, .marquee-track, .hero-kicker, .hero-sub, .hero-actions { transition: none !important; animation: none !important; transform: none !important; opacity: 1 !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="grain" aria-hidden="true"></div>
+  <div class="hover-label" id="hoverLabel" aria-hidden="true"></div>
+
+  <nav class="nav">
+    <a href="#top" class="nav-logo">
+      <img src="assets/xandbap-logo.png" alt="XandBap">
+      <span>XandBap</span>
+    </a>
+
+    <div class="nav-links">
+      <a href="#identidade" data-nav>Identidade</a>
+      <a href="#lancamentos" data-nav>Lançamentos</a>
+      <a href="#palco" data-nav>Ao vivo</a>
+    </div>
+
+    <div class="nav-right">
+      <a
+        href="https://wa.me/5581992777571?text=Ol%C3%A1%2C%20quero%20contratar%20o%20XandBap"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="btn btn-primary magnetic"
+      >
+        <svg class="btn-icon" viewBox="0 0 32 32"><path d="M16.001 3C9.383 3 4 8.383 4 15c0 2.386.703 4.607 1.912 6.472L4 29l7.72-1.877A11.94 11.94 0 0 0 16 27c6.617 0 12-5.383 12-12S22.618 3 16.001 3zm0 21.6c-1.85 0-3.58-.5-5.06-1.37l-.363-.216-4.583 1.115 1.142-4.463-.238-.375A9.55 9.55 0 0 1 5.4 15c0-5.85 4.75-10.6 10.6-10.6S26.6 9.15 26.6 15 21.85 24.6 16.001 24.6zm5.46-7.93c-.298-.15-1.767-.872-2.04-.972-.274-.1-.474-.15-.673.15-.198.298-.77.972-.944 1.172-.174.198-.348.223-.646.075-.298-.15-1.257-.463-2.394-1.478-.885-.789-1.483-1.764-1.657-2.062-.174-.298-.019-.46.13-.61.134-.133.298-.348.447-.522.15-.174.198-.298.298-.497.099-.198.05-.373-.025-.522-.075-.15-.673-1.62-.922-2.22-.243-.583-.49-.504-.673-.513l-.573-.01c-.198 0-.522.075-.795.373-.273.298-1.043 1.02-1.043 2.488s1.068 2.887 1.217 3.086c.15.198 2.1 3.207 5.086 4.497.711.307 1.266.49 1.699.627.714.227 1.364.195 1.878.118.573-.085 1.767-.722 2.016-1.42.248-.697.248-1.294.174-1.42-.075-.124-.273-.198-.571-.348z"/></svg>
+        Contratar
+      </a>
+      <button class="hamburger" id="hamburger" aria-label="Abrir menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#identidade" data-nav>Identidade</a>
+    <a href="#lancamentos" data-nav>Lançamentos</a>
+    <a href="#palco" data-nav>Ao vivo</a>
+    <a
+      href="https://wa.me/5581992777571?text=Ol%C3%A1%2C%20quero%20contratar%20o%20XandBap"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="btn btn-primary"
+    >Contratar</a>
+  </div>
+
+  <a
+    href="https://wa.me/5581992777571?text=Ol%C3%A1%2C%20quero%20contratar%20o%20XandBap"
+    target="_blank"
+    rel="noopener noreferrer"
+    class="fixed-whatsapp magnetic"
+    id="fixedCta"
+    aria-label="Falar no WhatsApp"
+  >
+    <svg viewBox="0 0 32 32"><path d="M16.001 3C9.383 3 4 8.383 4 15c0 2.386.703 4.607 1.912 6.472L4 29l7.72-1.877A11.94 11.94 0 0 0 16 27c6.617 0 12-5.383 12-12S22.618 3 16.001 3zm0 21.6c-1.85 0-3.58-.5-5.06-1.37l-.363-.216-4.583 1.115 1.142-4.463-.238-.375A9.55 9.55 0 0 1 5.4 15c0-5.85 4.75-10.6 10.6-10.6S26.6 9.15 26.6 15 21.85 24.6 16.001 24.6zm5.46-7.93c-.298-.15-1.767-.872-2.04-.972-.274-.1-.474-.15-.673.15-.198.298-.77.972-.944 1.172-.174.198-.348.223-.646.075-.298-.15-1.257-.463-2.394-1.478-.885-.789-1.483-1.764-1.657-2.062-.174-.298-.019-.46.13-.61.134-.133.298-.348.447-.522.15-.174.198-.298.298-.497.099-.198.05-.373-.025-.522-.075-.15-.673-1.62-.922-2.22-.243-.583-.49-.504-.673-.513l-.573-.01c-.198 0-.522.075-.795.373-.273.298-1.043 1.02-1.043 2.488s1.068 2.887 1.217 3.086c.15.198 2.1 3.207 5.086 4.497.711.307 1.266.49 1.699.627.714.227 1.364.195 1.878.118.573-.085 1.767-.722 2.016-1.42.248-.697.248-1.294.174-1.42-.075-.124-.273-.198-.571-.348z"/></svg>
+  </a>
+
+  <main id="top">
+
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-media img-reveal" id="heroMedia">
+        <video src="assets/show1.mp4" poster="assets/hero.jpg" autoplay muted loop playsinline preload="metadata"></video>
+      </div>
+      <div class="hero-glow"></div>
+
+      <div class="hero-content">
+        <div class="inner">
+          <p class="hero-kicker">DJ &amp; Produtor — Funk / Arrochadeira</p>
+          <h1 class="hero-title split-text" id="heroTitle">
+            <span class="word" style="--i:0"><span>O</span></span>
+            <span class="word" style="--i:1"><span>funk</span></span>
+            <span class="word" style="--i:2"><span>que</span></span>
+            <span class="word" style="--i:3"><span>domina</span></span>
+            <span class="word" style="--i:4"><span>a</span></span>
+            <span class="word" style="--i:5"><span>pista.</span></span>
+          </h1>
+          <p class="hero-sub">Repertório autoral, energia de palco e estrutura profissional para o seu evento.</p>
+
+          <div class="hero-actions">
+            <a
+              href="https://wa.me/5581992777571?text=Ol%C3%A1%2C%20quero%20contratar%20o%20XandBap"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn btn-primary magnetic"
+            >
+              <svg class="btn-icon" viewBox="0 0 32 32"><path d="M16.001 3C9.383 3 4 8.383 4 15c0 2.386.703 4.607 1.912 6.472L4 29l7.72-1.877A11.94 11.94 0 0 0 16 27c6.617 0 12-5.383 12-12S22.618 3 16.001 3zm0 21.6c-1.85 0-3.58-.5-5.06-1.37l-.363-.216-4.583 1.115 1.142-4.463-.238-.375A9.55 9.55 0 0 1 5.4 15c0-5.85 4.75-10.6 10.6-10.6S26.6 9.15 26.6 15 21.85 24.6 16.001 24.6zm5.46-7.93c-.298-.15-1.767-.872-2.04-.972-.274-.1-.474-.15-.673.15-.198.298-.77.972-.944 1.172-.174.198-.348.223-.646.075-.298-.15-1.257-.463-2.394-1.478-.885-.789-1.483-1.764-1.657-2.062-.174-.298-.019-.46.13-.61.134-.133.298-.348.447-.522.15-.174.198-.298.298-.497.099-.198.05-.373-.025-.522-.075-.15-.673-1.62-.922-2.22-.243-.583-.49-.504-.673-.513l-.573-.01c-.198 0-.522.075-.795.373-.273.298-1.043 1.02-1.043 2.488s1.068 2.887 1.217 3.086c.15.198 2.1 3.207 5.086 4.497.711.307 1.266.49 1.699.627.714.227 1.364.195 1.878.118.573-.085 1.767-.722 2.016-1.42.248-.697.248-1.294.174-1.42-.075-.124-.273-.198-.571-.348z"/></svg>
+              Contrate o XandBap
+            </a>
+            <a href="#lancamentos" class="btn btn-ghost">Ouça agora</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MARQUEE -->
+    <div class="marquee">
+      <div class="marquee-track">
+        <span><i>—</i>Eletrofunk<i>—</i>Mega Funk<i>—</i>MTG<i>—</i>Brega Funk<i>—</i>Arrochadeira</span>
+        <span><i>—</i>Eletrofunk<i>—</i>Mega Funk<i>—</i>MTG<i>—</i>Brega Funk<i>—</i>Arrochadeira</span>
+      </div>
+    </div>
+
+    <!-- IDENTIDADE -->
+    <section id="identidade" class="wrap">
+      <div class="split">
+        <div class="identity-photo-wrap img-reveal reveal">
+          <img src="assets/xandbap-portrait.png" alt="Retrato do DJ XandBap" width="1024" height="1280" loading="lazy" class="identity-photo">
+        </div>
+
+        <div class="reveal">
+          <span class="label">Identidade musical</span>
+          <h2 class="heading split-text">
+            <span class="word" style="--i:0"><span>Funk</span></span>
+            <span class="word" style="--i:1"><span>com</span></span>
+            <span class="word text-primary" style="--i:2"><span>assinatura</span></span>
+            <span class="word text-primary" style="--i:3"><span>própria</span></span>
+          </h2>
+          <p class="lede">
+            XandBap leva para os eventos um repertório marcante e sets pesados, com energia
+            e presença de palco do início ao fim — uma mistura dos principais estilos e
+            tendências do funk, com identidade autoral.
+          </p>
+          <div class="chip-row">
+            <span class="chip">Eletrofunk</span>
+            <span class="chip">Mega funk</span>
+            <span class="chip">MTG</span>
+            <span class="chip">Brega funk</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- LANÇAMENTOS -->
+    <section id="lancamentos" class="section-alt">
+      <div class="wrap section-pad reveal">
+        <div class="carousel-head">
+          <div>
+            <span class="label">Lançamentos</span>
+            <h2 class="heading split-text">
+              <span class="word" style="--i:0"><span>O</span></span>
+              <span class="word" style="--i:1"><span>que</span></span>
+              <span class="word" style="--i:2"><span>está</span></span>
+              <span class="word text-primary" style="--i:3"><span>tocando</span></span>
+            </h2>
+          </div>
+          <span class="drag-hint">Arraste <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        </div>
+      </div>
+
+      <div class="carousel-outer">
+        <div class="carousel" id="releaseCarousel" style="justify-content:center;">
+          <a href="https://open.spotify.com/" target="_blank" rel="noopener noreferrer" class="release-card" data-label="Ouvir">
+            <div class="release-cover-wrap img-reveal">
+              <img src="assets/setarrochadeira.png" alt="Capa de Set Arrochadeira XB" width="1080" height="1080" loading="lazy" class="release-cover">
+            </div>
+            <div class="release-info">
+              <div>
+                <p class="release-title">Set Arrochadeira XB</p>
+                <p class="release-type">Menor K, XandBap &amp; DJ Japa</p>
+              </div>
+              <span class="release-cta">Ouvir</span>
+            </div>
+          </a>
+
+          <div class="release-card">
+            <div class="release-cover-wrap img-reveal">
+              <img src="assets/medley-funk-xb2.jpg" alt="Capa de Medley Funk XB 2.0" width="1080" height="1080" loading="lazy" class="release-cover pending">
+              <span class="release-pending-label">Em breve</span>
+            </div>
+            <div class="release-info">
+              <div>
+                <p class="release-title">Medley Funk XB 2.0</p>
+                <p class="release-type">Lançamento dia 28</p>
+              </div>
+              <span class="release-cta">Em breve</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="wrap">
+        <div class="social-buttons">
+          <a href="https://open.spotify.com/" target="_blank" rel="noopener noreferrer" class="social-btn">Spotify</a>
+          <a href="https://www.tiktok.com/@xandbap" target="_blank" rel="noopener noreferrer" class="social-btn">TikTok</a>
+          <a href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer" class="social-btn">YouTube</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- NO PALCO -->
+    <section id="palco" class="wrap section-pad palco-section">
+      <span class="label">Ao vivo</span>
+      <h2 class="heading split-text">
+        <span class="word" style="--i:0"><span>Feito</span></span>
+        <span class="word" style="--i:1"><span>para</span></span>
+        <span class="word" style="--i:2"><span>o</span></span>
+        <span class="word text-primary" style="--i:3"><span>palco</span></span>
+      </h2>
+
+      <p class="lede center-col">
+        Estrutura profissional, set desenhado para o público do evento e presença de palco
+        do primeiro ao último minuto. XandBap entrega show — não só playlist.
+      </p>
+
+      <div class="stats-row">
+        <div class="stat">
+          <p class="stat-num" data-count-to="200" data-prefix="+">0</p>
+          <p class="stat-label">Shows realizados</p>
+        </div>
+        <div class="stat">
+          <p class="stat-num" data-count-to="4">0</p>
+          <p class="stat-label">Estados rodados</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="carousel-outer" style="margin-top:0;">
+      <div class="carousel" id="videoCarousel" style="justify-content:center; padding-top:0; padding-bottom:0;">
+        <div class="motion-card">
+          <div class="motion-item img-reveal" data-label="Ao vivo">
+            <video src="assets/show1.mp4" aria-label="XandBap ao vivo" muted loop playsinline autoplay preload="metadata"></video>
+          </div>
+        </div>
+        <div class="motion-card">
+          <div class="motion-item img-reveal" data-label="Ao vivo">
+            <video src="assets/show2.mp4" aria-label="Pista lotada" muted loop playsinline autoplay preload="metadata"></video>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CONTRATAÇÃO -->
+    <section class="wrap">
+      <div class="hire-section reveal">
+        <div class="hire-glow"></div>
+        <span class="label">Contratação</span>
+        <h2 class="heading">Leve o XandBap<br>pro seu evento</h2>
+        <p class="lede">Datas, cachê e rider técnico direto com a equipe. Resposta rápida pelo WhatsApp.</p>
+
+        <div class="hire-actions">
+          <a
+            href="https://wa.me/5581992777571?text=Ol%C3%A1%2C%20quero%20contratar%20o%20XandBap"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn btn-primary magnetic"
+          >
+            <svg class="btn-icon" viewBox="0 0 32 32"><path d="M16.001 3C9.383 3 4 8.383 4 15c0 2.386.703 4.607 1.912 6.472L4 29l7.72-1.877A11.94 11.94 0 0 0 16 27c6.617 0 12-5.383 12-12S22.618 3 16.001 3zm0 21.6c-1.85 0-3.58-.5-5.06-1.37l-.363-.216-4.583 1.115 1.142-4.463-.238-.375A9.55 9.55 0 0 1 5.4 15c0-5.85 4.75-10.6 10.6-10.6S26.6 9.15 26.6 15 21.85 24.6 16.001 24.6zm5.46-7.93c-.298-.15-1.767-.872-2.04-.972-.274-.1-.474-.15-.673.15-.198.298-.77.972-.944 1.172-.174.198-.348.223-.646.075-.298-.15-1.257-.463-2.394-1.478-.885-.789-1.483-1.764-1.657-2.062-.174-.298-.019-.46.13-.61.134-.133.298-.348.447-.522.15-.174.198-.298.298-.497.099-.198.05-.373-.025-.522-.075-.15-.673-1.62-.922-2.22-.243-.583-.49-.504-.673-.513l-.573-.01c-.198 0-.522.075-.795.373-.273.298-1.043 1.02-1.043 2.488s1.068 2.887 1.217 3.086c.15.198 2.1 3.207 5.086 4.497.711.307 1.266.49 1.699.627.714.227 1.364.195 1.878.118.573-.085 1.767-.722 2.016-1.42.248-.697.248-1.294.174-1.42-.075-.124-.273-.198-.571-.348z"/></svg>
+            Falar no WhatsApp
+          </a>
+          <a href="mailto:contato@xandbap.com" class="btn btn-ghost">contato@xandbap.com</a>
+        </div>
+      </div>
+    </section>
+
+    <div class="wrap">
+      <footer>
+        <div class="footer-brand">
+          <img src="assets/xandbap-logo.png" alt="XandBap" loading="lazy">
+          <span>XandBap</span>
+        </div>
+        <p id="footer-year">@XANDBAP</p>
+      </footer>
+      <div class="credit">
+        <span>Feito pela</span>
+        <a href="https://www.instagram.com/results.ag" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24"><path d="M12 2.2c3.2 0 3.6 0 4.9.07 1.2.06 2 .24 2.6.5.7.3 1.2.6 1.7 1.1.5.5.8 1 1.1 1.7.3.6.4 1.4.5 2.6.1 1.3.1 1.7.1 4.9s0 3.6-.1 4.9c-.1 1.2-.2 2-.5 2.6-.3.7-.6 1.2-1.1 1.7-.5.5-1 .8-1.7 1.1-.6.3-1.4.4-2.6.5-1.3.1-1.7.1-4.9.1s-3.6 0-4.9-.1c-1.2-.1-2-.2-2.6-.5-.7-.3-1.2-.6-1.7-1.1-.5-.5-.8-1-1.1-1.7-.3-.6-.4-1.4-.5-2.6C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.9c.1-1.2.2-2 .5-2.6.3-.7.6-1.2 1.1-1.7.5-.5 1-.8 1.7-1.1.6-.3 1.4-.4 2.6-.5C8.4 2.2 8.8 2.2 12 2.2zm0 1.8c-3.1 0-3.5 0-4.7.07-1 .05-1.6.2-1.9.34-.5.2-.8.4-1.2.8-.4.4-.6.7-.8 1.2-.14.4-.29 1-.34 1.9C3 9.5 3 9.9 3 13s0 3.5.07 4.7c.05 1 .2 1.6.34 1.9.2.5.4.8.8 1.2.4.4.7.6 1.2.8.4.14 1 .29 1.9.34 1.2.07 1.6.07 4.7.07s3.5 0 4.7-.07c1-.05 1.6-.2 1.9-.34.5-.2.8-.4 1.2-.8.4-.4.6-.7.8-1.2.14-.4.29-1 .34-1.9.07-1.2.07-1.6.07-4.7s0-3.5-.07-4.7c-.05-1-.2-1.6-.34-1.9-.2-.5-.4-.8-.8-1.2-.4-.4-.7-.6-1.2-.8-.4-.14-1-.29-1.9-.34C15.5 3 15.1 3 12 3zm0 3.9a5.1 5.1 0 1 1 0 10.2 5.1 5.1 0 0 1 0-10.2zm0 1.8a3.3 3.3 0 1 0 0 6.6 3.3 3.3 0 0 0 0-6.6zm5.3-2a1.2 1.2 0 1 1 0 2.4 1.2 1.2 0 0 1 0-2.4z"/></svg>
+          <span class="text-green">results.ag</span>
+        </a>
+      </div>
+    </div>
+
+  </main>
+
+  <script>
+    document.getElementById('footer-year').textContent = '@XANDBAP • ' + new Date().getFullYear();
+
+    var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var isFinePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+    /* fixed whatsapp bubble visibility */
+    var fixedCta = document.getElementById('fixedCta');
+    var hero = document.querySelector('.hero');
+    new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { fixedCta.classList.toggle('visible', !e.isIntersecting); });
+    }, { threshold: 0 }).observe(hero);
+
+    /* generic reveal on scroll */
+    var revealEls = document.querySelectorAll('.reveal');
+    var revealObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) { entry.target.classList.add('visible'); revealObserver.unobserve(entry.target); }
+      });
+    }, { threshold: 0.12 });
+    revealEls.forEach(function (el) { revealObserver.observe(el); });
+
+    /* split text word reveal */
+    var heroTitle = document.getElementById('heroTitle');
+    requestAnimationFrame(function () { setTimeout(function () { heroTitle.classList.add('in'); }, 250); });
+    var splitEls = document.querySelectorAll('.split-text:not(#heroTitle)');
+    var splitObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) { entry.target.classList.add('in'); splitObserver.unobserve(entry.target); }
+      });
+    }, { threshold: 0.4 });
+    splitEls.forEach(function (el) { splitObserver.observe(el); });
+
+    /* image curtain reveal */
+    var imgRevealEls = document.querySelectorAll('.img-reveal');
+    var heroMedia = document.getElementById('heroMedia');
+    var imgObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) { entry.target.classList.add('in'); imgObserver.unobserve(entry.target); }
+      });
+    }, { threshold: 0.15 });
+    imgRevealEls.forEach(function (el) { if (el !== heroMedia) imgObserver.observe(el); });
+    window.addEventListener('load', function () { setTimeout(function () { heroMedia.classList.add('in'); }, 150); });
+
+    /* count up stats */
+    var statEls = document.querySelectorAll('[data-count-to]');
+    var statObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        var el = entry.target;
+        var target = parseInt(el.getAttribute('data-count-to'), 10);
+        var prefix = el.getAttribute('data-prefix') || '';
+        if (reduceMotion) { el.textContent = prefix + target; statObserver.unobserve(el); return; }
+        var start = null, duration = 1200;
+        function step(ts) {
+          if (!start) start = ts;
+          var progress = Math.min((ts - start) / duration, 1);
+          var eased = 1 - Math.pow(1 - progress, 3);
+          el.textContent = prefix + Math.round(eased * target);
+          if (progress < 1) requestAnimationFrame(step);
+        }
+        requestAnimationFrame(step);
+        statObserver.unobserve(el);
+      });
+    }, { threshold: 0.6 });
+    statEls.forEach(function (el) { statObserver.observe(el); });
+
+    /* mobile menu */
+    var hamburger = document.getElementById('hamburger');
+    var mobileMenu = document.getElementById('mobileMenu');
+    hamburger.addEventListener('click', function () {
+      var open = mobileMenu.classList.toggle('open');
+      hamburger.classList.toggle('open', open);
+      hamburger.setAttribute('aria-expanded', open ? 'true' : 'false');
+      document.body.style.overflow = open ? 'hidden' : '';
+    });
+    mobileMenu.querySelectorAll('a').forEach(function (a) {
+      a.addEventListener('click', function () {
+        mobileMenu.classList.remove('open'); hamburger.classList.remove('open');
+        hamburger.setAttribute('aria-expanded', 'false'); document.body.style.overflow = '';
+      });
+    });
+
+    /* active nav link on scroll */
+    var navLinks = document.querySelectorAll('[data-nav]');
+    var sections = ['identidade', 'lancamentos', 'palco'].map(function (id) { return document.getElementById(id); });
+    var navObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          navLinks.forEach(function (l) { l.classList.toggle('active', l.getAttribute('href') === '#' + entry.target.id); });
+        }
+      });
+    }, { threshold: 0.5, rootMargin: '-40% 0px -40% 0px' });
+    sections.forEach(function (s) { if (s) navObserver.observe(s); });
+
+    /* drag-to-scroll carousels */
+    function makeDraggable(el) {
+      if (!el) return;
+      var isDown = false, startX, scrollLeft, moved;
+      el.addEventListener('mousedown', function (e) {
+        isDown = true; moved = false; el.classList.add('grabbing');
+        startX = e.pageX - el.offsetLeft; scrollLeft = el.scrollLeft;
+      });
+      window.addEventListener('mouseup', function () { isDown = false; el.classList.remove('grabbing'); });
+      el.addEventListener('mouseleave', function () { isDown = false; el.classList.remove('grabbing'); });
+      el.addEventListener('mousemove', function (e) {
+        if (!isDown) return;
+        e.preventDefault();
+        var x = e.pageX - el.offsetLeft;
+        var walk = x - startX;
+        if (Math.abs(walk) > 5) moved = true;
+        el.scrollLeft = scrollLeft - walk;
+      });
+      el.addEventListener('click', function (e) { if (moved) { e.preventDefault(); e.stopPropagation(); } }, true);
+    }
+    makeDraggable(document.getElementById('releaseCarousel'));
+    makeDraggable(document.getElementById('videoCarousel'));
+
+    /* desktop-only: magnetic buttons, hover labels */
+    if (isFinePointer && !reduceMotion) {
+      document.querySelectorAll('.magnetic').forEach(function (btn) {
+        btn.addEventListener('mousemove', function (e) {
+          var r = btn.getBoundingClientRect();
+          var relX = e.clientX - r.left - r.width / 2;
+          var relY = e.clientY - r.top - r.height / 2;
+          btn.style.transition = 'none';
+          btn.style.transform = 'translate(' + relX * 0.22 + 'px,' + relY * 0.32 + 'px)';
+        });
+        btn.addEventListener('mouseleave', function () {
+          btn.style.transition = 'transform .45s var(--ease)';
+          btn.style.transform = 'translate(0,0)';
+        });
+      });
+
+      var hoverLabel = document.getElementById('hoverLabel');
+      document.querySelectorAll('[data-label]').forEach(function (card) {
+        card.addEventListener('mouseenter', function () { hoverLabel.textContent = card.getAttribute('data-label'); hoverLabel.classList.add('show'); });
+        card.addEventListener('mousemove', function (e) { hoverLabel.style.left = e.clientX + 'px'; hoverLabel.style.top = e.clientY + 'px'; });
+        card.addEventListener('mouseleave', function () { hoverLabel.classList.remove('show'); });
+      });
+    }
+  </script>
+
+</body>
+</html>
