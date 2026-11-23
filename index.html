@@ -2,454 +2,239 @@
 <html lang="pt-BR" class="no-js">
 <head>
   <meta charset="UTF-8">
+  <title>XandBap</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#0b0a09">
-  <title>XandBap — DJ de Arrochadeira e Funk</title>
-  <meta name="description" content="Site oficial do DJ XandBap. Arrochadeira, funk e energia de palco. Ouça os lançamentos, veja os shows e contrate para o seu evento.">
+  <meta name="claude:viewport-fit-sides" content="cover">
+  <meta name="theme-color" content="#0B0B0D">
+  <meta name="description" content="XandBap, DJ e produtor de funk e arrochadeira. Lançamentos, vídeos ao vivo e contratação.">
   <meta name="author" content="XandBap">
-  <meta property="og:title" content="XandBap — DJ de Arrochadeira e Funk">
-  <meta property="og:description" content="Lançamentos, agenda e contratação do DJ XandBap.">
-  <meta property="og:image" content="assets/hero.jpg">
+  <meta property="og:title" content="XandBap — DJ e produtor">
+  <meta property="og:description" content="Funk e arrochadeira. Lançamentos, vídeos ao vivo e contratação.">
+  <meta property="og:image" content="assets/xandbap-portrait.webp">
   <meta property="og:type" content="website">
+  <meta property="og:locale" content="pt_BR">
   <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" type="image/png" href="assets/favicon.png">
 
-  <!-- marca a página como "com JS" antes de pintar: evita flash da abertura/animações sem JS -->
-  <script>document.documentElement.className = document.documentElement.className.replace('no-js', 'js is-loading');</script>
+  <script>
+    (function (d) {
+      var c = d.className.replace('no-js', '') + ' js';
+      // abertura Red Reveal: toda visita/recarga, exceto com movimento reduzido
+      try { if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) c += ' has-opening'; } catch (e) {}
+      d.className = c;
+    })(document.documentElement);
+  </script>
 
+  <!-- hero priorizado -->
+  <link rel="preload" as="image" type="image/webp" href="assets/xandbap-portrait.webp"
+        imagesrcset="assets/xandbap-portrait-600.webp 600w, assets/xandbap-portrait.webp 941w"
+        imagesizes="(min-width: 1024px) 42vw, 100vw" fetchpriority="high">
   <link rel="preload" as="image" href="assets/xandbap-logo.png">
-  <link rel="preload" as="image" href="assets/hero.jpg">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <!-- fontes sem bloquear a renderização: a abertura espera por elas com timeout -->
-  <link id="fontsCss" rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Anton&family=Barlow+Condensed:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" onload="this.onload=null;this.rel='stylesheet';this.setAttribute('data-loaded','')">
-  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Barlow+Condensed:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"></noscript>
+  <link rel="preload" as="font" type="font/woff" href="fonts/BricolageGrotesque-Bold.woff" crossorigin>
   <link rel="stylesheet" href="css/main.css">
 </head>
 <body>
 
-  <!-- ícones reutilizados -->
-  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <svg width="0" height="0" class="sprite" aria-hidden="true" focusable="false">
     <symbol id="i-wa" viewBox="0 0 32 32"><path d="M16.001 3C9.383 3 4 8.383 4 15c0 2.386.703 4.607 1.912 6.472L4 29l7.72-1.877A11.94 11.94 0 0 0 16 27c6.617 0 12-5.383 12-12S22.618 3 16.001 3zm0 21.6c-1.85 0-3.58-.5-5.06-1.37l-.363-.216-4.583 1.115 1.142-4.463-.238-.375A9.55 9.55 0 0 1 5.4 15c0-5.85 4.75-10.6 10.6-10.6S26.6 9.15 26.6 15 21.85 24.6 16.001 24.6zm5.46-7.93c-.298-.15-1.767-.872-2.04-.972-.274-.1-.474-.15-.673.15-.198.298-.77.972-.944 1.172-.174.198-.348.223-.646.075-.298-.15-1.257-.463-2.394-1.478-.885-.789-1.483-1.764-1.657-2.062-.174-.298-.019-.46.13-.61.134-.133.298-.348.447-.522.15-.174.198-.298.298-.497.099-.198.05-.373-.025-.522-.075-.15-.673-1.62-.922-2.22-.243-.583-.49-.504-.673-.513l-.573-.01c-.198 0-.522.075-.795.373-.273.298-1.043 1.02-1.043 2.488s1.068 2.887 1.217 3.086c.15.198 2.1 3.207 5.086 4.497.711.307 1.266.49 1.699.627.714.227 1.364.195 1.878.118.573-.085 1.767-.722 2.016-1.42.248-.697.248-1.294.174-1.42-.075-.124-.273-.198-.571-.348z"/></symbol>
-    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"/></symbol>
-    <symbol id="i-out" viewBox="0 0 24 24"><path d="M7 17 17 7M8 7h9v9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"/></symbol>
-    <symbol id="i-sound-off" viewBox="0 0 24 24"><path d="M4 9h4l5-4v14l-5-4H4z" fill="currentColor"/><path d="m16 9 5 6m0-6-5 6" stroke="currentColor" stroke-width="2" fill="none"/></symbol>
-    <symbol id="i-sound-on" viewBox="0 0 24 24"><path d="M4 9h4l5-4v14l-5-4H4z" fill="currentColor"/><path d="M16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12" stroke="currentColor" stroke-width="2" fill="none"/></symbol>
-    <symbol id="i-play" viewBox="0 0 24 24"><path d="M7 5v14l12-7z" fill="currentColor"/></symbol>
-    <symbol id="i-pause" viewBox="0 0 24 24"><path d="M7 5h4v14H7zM13 5h4v14h-4z" fill="currentColor"/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24"><path d="M8 5.5v13l10.5-6.5z"/></symbol>
+    <symbol id="i-pause" viewBox="0 0 24 24"><path d="M7 5h3.6v14H7zM13.4 5H17v14h-3.6z"/></symbol>
+    <symbol id="i-vol-off" viewBox="0 0 24 24"><path d="M4 9.2h3.6L12 5.5v13l-4.4-3.7H4z"/><path d="m15.5 9.5 5 5m0-5-5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+    <symbol id="i-vol-on" viewBox="0 0 24 24"><path d="M4 9.2h3.6L12 5.5v13l-4.4-3.7H4z"/><path d="M15.3 9a4.2 4.2 0 0 1 0 6M17.8 6.5a7.8 7.8 0 0 1 0 11" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+    <symbol id="i-expand" viewBox="0 0 24 24"><path d="M4.5 9V4.5H9M15 4.5h4.5V9M19.5 15v4.5H15M9 19.5H4.5V15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h13.5M13 6.5l5.5 5.5-5.5 5.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-out" viewBox="0 0 24 24"><path d="M7.5 16.5l9-9M9 7.5h7.5V15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
     <symbol id="i-ig" viewBox="0 0 24 24"><path d="M12 2.2c3.2 0 3.6 0 4.9.07 1.2.06 2 .24 2.6.5.7.3 1.2.6 1.7 1.1.5.5.8 1 1.1 1.7.3.6.4 1.4.5 2.6.1 1.3.1 1.7.1 4.9s0 3.6-.1 4.9c-.1 1.2-.2 2-.5 2.6-.3.7-.6 1.2-1.1 1.7-.5.5-1 .8-1.7 1.1-.6.3-1.4.4-2.6.5-1.3.1-1.7.1-4.9.1s-3.6 0-4.9-.1c-1.2-.1-2-.2-2.6-.5-.7-.3-1.2-.6-1.7-1.1-.5-.5-.8-1-1.1-1.7-.3-.6-.4-1.4-.5-2.6C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.9c.1-1.2.2-2 .5-2.6.3-.7.6-1.2 1.1-1.7.5-.5 1-.8 1.7-1.1.6-.3 1.4-.4 2.6-.5C8.4 2.2 8.8 2.2 12 2.2zm0 1.8c-3.1 0-3.5 0-4.7.07-1 .05-1.6.2-1.9.34-.5.2-.8.4-1.2.8-.4.4-.6.7-.8 1.2-.14.4-.29 1-.34 1.9C3 9.5 3 9.9 3 13s0 3.5.07 4.7c.05 1 .2 1.6.34 1.9.2.5.4.8.8 1.2.4.4.7.6 1.2.8.4.14 1 .29 1.9.34 1.2.07 1.6.07 4.7.07s3.5 0 4.7-.07c1-.05 1.6-.2 1.9-.34.5-.2.8-.4 1.2-.8.4-.4.6-.7.8-1.2.14-.4.29-1 .34-1.9.07-1.2.07-1.6.07-4.7s0-3.5-.07-4.7c-.05-1-.2-1.6-.34-1.9-.2-.5-.4-.8-.8-1.2-.4-.4-.7-.6-1.2-.8-.4-.14-1-.29-1.9-.34C15.5 3 15.1 3 12 3zm0 3.9a5.1 5.1 0 1 1 0 10.2 5.1 5.1 0 0 1 0-10.2zm0 1.8a3.3 3.3 0 1 0 0 6.6 3.3 3.3 0 0 0 0-6.6zm5.3-2a1.2 1.2 0 1 1 0 2.4 1.2 1.2 0 0 1 0-2.4z"/></symbol>
   </svg>
 
-  <!-- ================= ABERTURA ================= -->
-  <div class="loader" id="loader" role="status" aria-live="polite">
-    <div class="loader-panel">
-      <div class="loader-glow" aria-hidden="true"></div>
-      <span class="corner tl" aria-hidden="true"></span><span class="corner tr" aria-hidden="true"></span>
-      <span class="corner bl" aria-hidden="true"></span><span class="corner br" aria-hidden="true"></span>
-
-      <div class="loader-top mono" aria-hidden="true">
-        <span><i class="rec-dot"></i>XandBap — site oficial</span>
-        <span class="hide-sm">Funk / Arrochadeira</span>
-      </div>
-
-      <div class="loader-center">
-        <div class="loader-logo">
-          <img src="assets/xandbap-logo.png" alt="XandBap" width="662" height="706">
-        </div>
-        <div class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
-      </div>
-
-      <p class="loader-vertical mono" aria-hidden="true">Carregando o set</p>
-
-      <div class="loader-bottom">
-        <div class="loader-row mono">
-          <span id="loaderStep">Preparando a interface</span>
-          <span class="loader-pct"><span id="loaderPct">00</span>%</span>
-        </div>
-        <div class="loader-bar" role="progressbar" aria-label="Carregamento do site" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="loaderBarWrap">
-          <span id="loaderBar"></span>
-        </div>
-        <ol class="loader-steps mono" id="loaderSteps" aria-hidden="true">
-          <li data-step="interface">Interface</li>
-          <li data-step="fontes">Tipografia</li>
-          <li data-step="imagens">Imagens</li>
-          <li data-step="video">Vídeo</li>
-        </ol>
-      </div>
-    </div>
-    <div class="loader-wipe" aria-hidden="true"></div>
+  <!-- Abertura: XandBap Red Reveal (só com JS; termina sozinha por CSS) -->
+  <div class="opening" id="opening" aria-hidden="true">
+    <div class="op-panel op-top"></div>
+    <div class="op-panel op-bot"></div>
+    <img class="op-logo" src="assets/xandbap-logo.png" alt="" width="662" height="706">
+    <span class="op-line"></span>
   </div>
 
-  <div class="grain" aria-hidden="true"></div>
-  <div class="scroll-progress" aria-hidden="true"><span id="scrollProgress"></span></div>
-  <div class="hover-label" id="hoverLabel" aria-hidden="true"></div>
+  <a class="skip" href="#conteudo">Pular para o conteúdo</a>
 
-  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
-
-  <!-- ================= CABEÇALHO ================= -->
+  <!-- ===================== HEADER ===================== -->
   <header class="header" id="header">
-    <a href="#top" class="header-logo" aria-label="XandBap — início">
-      <img src="assets/xandbap-logo.png" alt="" width="662" height="706">
-      <span>XandBap</span>
-    </a>
-
-    <nav class="header-nav" aria-label="Principal">
-      <a href="#identidade" data-nav><small>01</small>Identidade</a>
-      <a href="#lancamentos" data-nav><small>02</small>Lançamentos</a>
-      <a href="#palco" data-nav><small>03</small>Ao vivo</a>
-      <a href="#contratar" data-nav><small>04</small>Contratação</a>
-    </nav>
-
-    <div class="header-right">
-      <a href="https://wa.me/5581992777571?text=Ol%C3%A1%2C%20quero%20contratar%20o%20XandBap" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-sm magnetic">
-        <svg class="btn-icon" aria-hidden="true"><use href="#i-wa"/></svg>
-        <span>Contratar</span>
+    <div class="header-in">
+      <a href="#topo" class="brand" aria-label="XandBap, voltar ao início">
+        <span class="sig sig-logo" data-sig="hover">
+          <img src="assets/xandbap-logo.png" alt="" width="662" height="706">
+        </span>
       </a>
-      <button class="menu-toggle" id="menuToggle" aria-label="Abrir menu" aria-expanded="false" aria-controls="mobileMenu">
-        <span class="menu-toggle-lines" aria-hidden="true"><i></i><i></i></span>
-        <span class="menu-toggle-text mono" aria-hidden="true">Menu</span>
-      </button>
+      <nav class="nav" aria-label="Seções">
+        <a href="#musica">Música</a>
+        <a href="#em-cena">Em cena</a>
+        <a href="#contratacao">Contratação</a>
+      </nav>
+      <a href="#contratacao" class="pill pill-line pill-sm">Contratar</a>
     </div>
   </header>
 
-  <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
-    <div class="mobile-menu-inner">
-      <p class="mono mobile-menu-kicker">Navegação</p>
-      <nav class="mobile-menu-links" aria-label="Menu móvel">
-        <a href="#identidade" data-nav><small>01</small>Identidade</a>
-        <a href="#lancamentos" data-nav><small>02</small>Lançamentos</a>
-        <a href="#palco" data-nav><small>03</small>Ao vivo</a>
-        <a href="#contratar" data-nav><small>04</small>Contratação</a>
-      </nav>
-      <div class="mobile-menu-foot">
-        <a href="https://wa.me/5581992777571?text=Ol%C3%A1%2C%20quero%20contratar%20o%20XandBap" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
-          <svg class="btn-icon" aria-hidden="true"><use href="#i-wa"/></svg>
-          Contratar
-        </a>
-        <div class="mobile-menu-social mono">
-          <a href="https://open.spotify.com/" target="_blank" rel="noopener noreferrer">Spotify</a>
-          <a href="https://www.tiktok.com/@xandbap" target="_blank" rel="noopener noreferrer">TikTok</a>
-          <a href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer">YouTube</a>
-        </div>
-      </div>
-    </div>
-  </div>
+  <main id="topo">
 
-  <a href="https://wa.me/5581992777571?text=Ol%C3%A1%2C%20quero%20contratar%20o%20XandBap" target="_blank" rel="noopener noreferrer" class="fixed-whatsapp" id="fixedCta" aria-label="Falar no WhatsApp">
-    <svg aria-hidden="true"><use href="#i-wa"/></svg>
-  </a>
-
-  <main id="top">
-
-    <!-- ================= HERO ================= -->
-    <section class="hero" aria-labelledby="heroTitle">
-      <div class="hero-backdrop" aria-hidden="true">
-        <img src="assets/hero.jpg" alt="" width="1365" height="2048" data-parallax="0.18" data-media>
-      </div>
-      <div class="hero-glow" aria-hidden="true"></div>
-      <img class="hero-ghost" src="assets/xandbap-logo.png" alt="" aria-hidden="true" width="662" height="706" data-parallax="-0.08">
-
-      <div class="hero-grid wrap">
-        <div class="hero-copy">
-          <p class="hero-kicker mono" data-hero="1"><i class="rec-dot"></i>DJ &amp; Produtor — Funk / Arrochadeira</p>
-
-          <h1 class="hero-title" id="heroTitle">
-            <span class="line"><span>O funk</span></span>
-            <span class="line"><span>que domina</span></span>
-            <span class="line line-accent"><span>a pista.</span></span>
-          </h1>
-
-          <div class="hero-bottom">
-            <p class="hero-sub" data-hero="2">Repertório autoral, energia de palco e estrutura profissional para o seu evento.</p>
-            <div class="hero-actions" data-hero="3">
-              <a href="https://wa.me/5581992777571?text=Ol%C3%A1%2C%20quero%20contratar%20o%20XandBap" target="_blank" rel="noopener noreferrer" class="btn btn-primary magnetic">
-                <svg class="btn-icon" aria-hidden="true"><use href="#i-wa"/></svg>
-                Contrate o XandBap
-              </a>
-              <a href="#lancamentos" class="link-arrow">
-                <span>Ouça agora</span>
-                <svg aria-hidden="true"><use href="#i-arrow"/></svg>
-              </a>
-            </div>
-          </div>
-        </div>
-
-        <figure class="hero-frame" data-hero="frame">
-          <div class="frame-media media" data-media-label="Vídeo ao vivo">
-            <video id="heroVideo" src="assets/show1.mp4" poster="assets/hero.jpg" muted loop playsinline preload="metadata" aria-label="XandBap tocando ao vivo"></video>
-            <div class="frame-hud mono" aria-hidden="true">
-              <span><i class="rec-dot"></i>REC</span>
-              <span class="timecode" data-timecode-for="heroVideo">00:00:00</span>
-            </div>
-          </div>
-          <span class="corner tl" aria-hidden="true"></span><span class="corner tr" aria-hidden="true"></span>
-          <span class="corner bl" aria-hidden="true"></span><span class="corner br" aria-hidden="true"></span>
-          <figcaption class="frame-caption mono">
-            <span>Ao vivo</span>
-            <button class="icon-btn" type="button" data-video-toggle="heroVideo" aria-label="Pausar vídeo">
-              <svg class="i-pause" aria-hidden="true"><use href="#i-pause"/></svg>
-              <svg class="i-play" aria-hidden="true"><use href="#i-play"/></svg>
-            </button>
-          </figcaption>
+    <!-- ===================== HERO ===================== -->
+    <section class="hero" aria-labelledby="nome">
+      <div class="hero-in">
+        <figure class="hero-photo reveal-mask" data-hero="photo">
+          <picture>
+            <source type="image/webp" srcset="assets/xandbap-portrait-600.webp 600w, assets/xandbap-portrait.webp 941w" sizes="(min-width: 1024px) 42vw, 100vw">
+            <img src="assets/xandbap-portrait.png" alt="Retrato de XandBap segurando fones de ouvido, sob luz vermelha" width="941" height="1672" fetchpriority="high" decoding="async">
+          </picture>
         </figure>
-      </div>
 
-      <p class="hero-vertical mono" aria-hidden="true">Funk — Arrochadeira — Ao vivo</p>
+        <h1 class="hero-name" id="nome">
+          <span class="sig sig-text" data-sig="intro">XandBap</span>
+        </h1>
 
-      <div class="hero-meta wrap mono" data-hero="4">
-        <span>@XANDBAP</span>
-        <span class="hide-sm">Eletrofunk / Mega funk / MTG / Brega funk</span>
-        <a href="#identidade" class="scroll-cue">Role <i aria-hidden="true"></i></a>
+        <div class="hero-side" data-hero="side">
+          <p class="hero-role">DJ e produtor de funk e&nbsp;arrochadeira.</p>
+          <a href="https://wa.me/5581992777571?text=Ol%C3%A1%2C%20quero%20contratar%20o%20XandBap" class="pill pill-accent" target="_blank" rel="noopener noreferrer">
+            <svg class="ico" aria-hidden="true"><use href="#i-wa"/></svg>
+            Solicitar contratação
+          </a>
+        </div>
       </div>
     </section>
-
-    <!-- ================= FAIXA DE ESTILOS ================= -->
-    <div class="bands" aria-label="Estilos: Eletrofunk, Mega Funk, MTG, Brega Funk, Arrochadeira">
-      <div class="band band-back" aria-hidden="true">
-        <div class="band-track">
-          <span>Eletrofunk <i>✕</i> Mega Funk <i>✕</i> MTG <i>✕</i> Brega Funk <i>✕</i> Arrochadeira <i>✕</i></span>
-          <span>Eletrofunk <i>✕</i> Mega Funk <i>✕</i> MTG <i>✕</i> Brega Funk <i>✕</i> Arrochadeira <i>✕</i></span>
-        </div>
-      </div>
-      <div class="band band-front" aria-hidden="true">
-        <div class="band-track">
-          <span>Eletrofunk <i>—</i> Mega Funk <i>—</i> MTG <i>—</i> Brega Funk <i>—</i> Arrochadeira <i>—</i></span>
-          <span>Eletrofunk <i>—</i> Mega Funk <i>—</i> MTG <i>—</i> Brega Funk <i>—</i> Arrochadeira <i>—</i></span>
-        </div>
-      </div>
-    </div>
 
     <div id="conteudo"></div>
 
-    <!-- ================= IDENTIDADE ================= -->
-    <section id="identidade" class="section identity" aria-labelledby="identidadeTitle">
+    <!-- ===================== MÚSICA ===================== -->
+    <section class="section music" id="musica" aria-labelledby="musica-t">
       <div class="wrap">
-        <header class="section-head" data-reveal>
-          <p class="section-index mono"><span>(01)</span> Identidade musical</p>
-          <span class="section-rule" aria-hidden="true"></span>
-        </header>
-
-        <div class="identity-grid">
-          <figure class="identity-figure" data-reveal="clip">
-            <div class="identity-photo media" data-media-label="Retrato do artista">
-              <picture>
-                <source srcset="assets/xandbap-portrait.webp" type="image/webp">
-                <img src="assets/xandbap-portrait.png" alt="Retrato do DJ XandBap" width="941" height="1672" loading="lazy" decoding="async" data-parallax="0.06" data-media>
-              </picture>
-            </div>
-            <div class="sticker mono" aria-hidden="true">
-              <strong>XandBap</strong>
-              <span>Funk com assinatura</span>
-              <span class="barcode"></span>
-            </div>
-            <span class="corner tl" aria-hidden="true"></span><span class="corner br" aria-hidden="true"></span>
-          </figure>
-
-          <div class="identity-copy">
-            <h2 class="display split" id="identidadeTitle" data-reveal="lines">
-              <span class="line"><span>Funk com</span></span>
-              <span class="line"><span class="accent">assinatura</span></span>
-              <span class="line"><span class="accent">própria</span></span>
-            </h2>
-            <p class="lede" data-reveal>
-              XandBap leva para os eventos um repertório marcante e sets pesados, com energia
-              e presença de palco do início ao fim — uma mistura dos principais estilos e
-              tendências do funk, com identidade autoral.
-            </p>
-
-            <ol class="style-list" data-reveal="stagger">
-              <li><span class="mono">01</span><strong>Eletrofunk</strong></li>
-              <li><span class="mono">02</span><strong>Mega funk</strong></li>
-              <li><span class="mono">03</span><strong>MTG</strong></li>
-              <li><span class="mono">04</span><strong>Brega funk</strong></li>
-            </ol>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ================= LANÇAMENTOS ================= -->
-    <section id="lancamentos" class="section releases" aria-labelledby="lancamentosTitle">
-      <div class="wrap">
-        <header class="section-head" data-reveal>
-          <p class="section-index mono"><span>(02)</span> Lançamentos</p>
-          <span class="section-rule" aria-hidden="true"></span>
-        </header>
-
-        <div class="releases-head">
-          <h2 class="display split" id="lancamentosTitle" data-reveal="lines">
-            <span class="line"><span>O que está</span></span>
-            <span class="line"><span class="accent">tocando</span></span>
-          </h2>
-          <div class="carousel-controls" data-controls-for="releaseCarousel" data-reveal>
-            <span class="drag-hint mono">Arraste <svg aria-hidden="true"><use href="#i-arrow"/></svg></span>
-            <div class="carousel-progress" aria-hidden="true"><span></span></div>
-            <button type="button" class="icon-btn round" data-dir="-1" aria-label="Lançamento anterior"><svg style="transform:scaleX(-1)" aria-hidden="true"><use href="#i-arrow"/></svg></button>
-            <button type="button" class="icon-btn round" data-dir="1" aria-label="Próximo lançamento"><svg aria-hidden="true"><use href="#i-arrow"/></svg></button>
+        <div class="section-head reveal">
+          <h2 class="h2" id="musica-t">Música</h2>
+          <div class="shelf-ui" data-shelf-ui>
+            <p class="shelf-count" aria-live="polite"><span data-shelf-index>01</span> / <span data-shelf-total>02</span></p>
+            <button type="button" class="round" data-shelf-prev aria-label="Lançamento anterior"><svg class="ico flip" aria-hidden="true"><use href="#i-arrow"/></svg></button>
+            <button type="button" class="round" data-shelf-next aria-label="Próximo lançamento"><svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></button>
           </div>
         </div>
       </div>
 
-      <div class="carousel-outer">
-        <div class="carousel" id="releaseCarousel" tabindex="0" aria-label="Lançamentos — role para o lado">
-          <a href="https://open.spotify.com/" target="_blank" rel="noopener noreferrer" class="release-card" data-label="Ouvir" data-reveal="card">
-            <div class="release-sleeve">
-              <span class="vinyl" aria-hidden="true"></span>
-              <div class="release-cover media" data-media-label="Capa">
-                <picture>
-                  <source srcset="assets/setarrochadeira.webp" type="image/webp">
-                  <img src="assets/setarrochadeira.png" alt="Capa de Set Arrochadeira XB" width="1080" height="1080" loading="lazy" decoding="async" data-media>
-                </picture>
-              </div>
-            </div>
-            <div class="release-info">
-              <p class="release-index mono">01 — Disponível</p>
-              <p class="release-title">Set Arrochadeira XB</p>
-              <p class="release-type">Menor K, XandBap &amp; DJ Japa</p>
-              <span class="release-cta mono">Ouvir <svg aria-hidden="true"><use href="#i-out"/></svg></span>
-            </div>
+      <div class="shelf has-featured" id="shelf" tabindex="0" role="region" aria-label="Lançamentos. Use as setas para navegar.">
+        <!--
+          LANÇAMENTOS — o mais recente aparece primeiro (ordem por data-date, AAAA-MM-DD).
+          Novo lançamento: copie o bloco abaixo, troque capa, nome, link do Spotify e data-date.
+          O destaque ("Novo lançamento" + botão vermelho) some sozinho 60 dias após a data,
+          e a música continua no catálogo como as demais.
+        -->
+        <article class="release is-featured" data-release data-date="2026-11-10">
+          <a class="release-cover" href="https://open.spotify.com/intl-pt/track/6VglHpLDyLevHhWOuTynOS" target="_blank" rel="noopener noreferrer" aria-label="Ouvir Mega Se Eu Tiver Solteiro X Tá Pedindo Toma no Spotify" data-glow data-tilt>
+            <picture>
+              <source type="image/webp" srcset="assets/se-tiver-solteiro-toma-480.webp 480w, assets/se-tiver-solteiro-toma.webp 840w" sizes="(min-width: 1024px) 525px, 87vw">
+              <img src="assets/se-tiver-solteiro-toma.jpg" alt="Capa de Mega Se Eu Tiver Solteiro X Tá Pedindo Toma" width="1080" height="1080" decoding="async">
+            </picture>
           </a>
-
-          <div class="release-card is-pending" data-reveal="card">
-            <div class="release-sleeve">
-              <div class="release-cover media" data-media-label="Capa">
-                <picture>
-                  <source srcset="assets/medley-funk-xb2.webp" type="image/webp">
-                  <img src="assets/medley-funk-xb2.jpg" alt="Capa de Medley Funk XB 2.0" width="1080" height="1080" loading="lazy" decoding="async" data-media>
-                </picture>
-                <span class="release-pending-label mono">Em breve</span>
-              </div>
-            </div>
-            <div class="release-info">
-              <p class="release-index mono">02 — Em breve</p>
-              <p class="release-title">Medley Funk XB 2.0</p>
-              <p class="release-type">Lançamento dia 28</p>
-              <span class="release-cta mono is-muted">Em breve</span>
-            </div>
+          <div class="release-meta">
+            <p class="release-tag">Novo lançamento</p>
+            <h3 class="release-title">Mega Se Eu Tiver Solteiro X Tá Pedindo Toma</h3>
+            <p class="release-by">XandBap</p>
+            <a class="pill pill-accent release-cta" href="https://open.spotify.com/intl-pt/track/6VglHpLDyLevHhWOuTynOS" target="_blank" rel="noopener noreferrer">Ouvir no Spotify <svg class="ico" aria-hidden="true"><use href="#i-out"/></svg></a>
           </div>
-        </div>
-      </div>
+        </article>
 
-      <div class="wrap">
-        <div class="platforms" data-reveal="stagger">
-          <p class="mono platforms-label">Ouça em</p>
-          <a href="https://open.spotify.com/" target="_blank" rel="noopener noreferrer" class="platform"><span>Spotify</span><svg aria-hidden="true"><use href="#i-out"/></svg></a>
-          <a href="https://www.tiktok.com/@xandbap" target="_blank" rel="noopener noreferrer" class="platform"><span>TikTok</span><svg aria-hidden="true"><use href="#i-out"/></svg></a>
-          <a href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer" class="platform"><span>YouTube</span><svg aria-hidden="true"><use href="#i-out"/></svg></a>
-        </div>
+        <article class="release" data-release>
+          <a class="release-cover" href="https://open.spotify.com/" target="_blank" rel="noopener noreferrer" aria-label="Ouvir Set Arrochadeira XB no Spotify" data-glow data-tilt>
+            <picture>
+              <source type="image/webp" srcset="assets/setarrochadeira-480.webp 480w, assets/setarrochadeira.webp 840w" sizes="(min-width: 1024px) 460px, 76vw">
+              <img src="assets/setarrochadeira.png" alt="Capa de Set Arrochadeira XB" width="1080" height="1080" loading="lazy" decoding="async">
+            </picture>
+          </a>
+          <div class="release-meta">
+            <h3 class="release-title">Set Arrochadeira XB</h3>
+            <p class="release-by">Menor K, XandBap e DJ Japa</p>
+            <a class="release-link" href="https://open.spotify.com/" target="_blank" rel="noopener noreferrer">Ouvir no Spotify <svg class="ico" aria-hidden="true"><use href="#i-out"/></svg></a>
+          </div>
+        </article>
+
       </div>
     </section>
 
-    <!-- ================= AO VIVO ================= -->
-    <section id="palco" class="section stage" aria-labelledby="palcoTitle">
+    <!-- ===================== EM CENA ===================== -->
+    <section class="section stage" id="em-cena" aria-labelledby="em-cena-t">
       <div class="wrap stage-grid">
-        <div class="stage-copy">
-          <header class="section-head" data-reveal>
-            <p class="section-index mono"><span>(03)</span> Ao vivo</p>
-            <span class="section-rule" aria-hidden="true"></span>
-          </header>
-          <h2 class="display split" id="palcoTitle" data-reveal="lines">
-            <span class="line"><span>Feito para</span></span>
-            <span class="line"><span class="accent">o palco</span></span>
-          </h2>
-          <p class="lede" data-reveal>
-            Estrutura profissional, set desenhado para o público do evento e presença de palco
-            do primeiro ao último minuto. XandBap entrega show — não só playlist.
-          </p>
-
-          <dl class="stats" data-reveal="stagger">
-            <div class="stat">
-              <dt class="mono">Shows realizados</dt>
-              <dd class="stat-num" data-count-to="200" data-prefix="+">+200</dd>
-            </div>
-            <div class="stat">
-              <dt class="mono">Estados rodados</dt>
-              <dd class="stat-num" data-count-to="4">4</dd>
-            </div>
+        <div class="stage-head reveal">
+          <h2 class="h2" id="em-cena-t">Em cena</h2>
+          <dl class="facts">
+            <div><dt>Shows</dt><dd>+200</dd></div>
+            <div><dt>Estados</dt><dd>4</dd></div>
           </dl>
         </div>
 
-        <div class="stage-videos carousel" id="videoCarousel" tabindex="0" aria-label="Vídeos ao vivo">
-          <figure class="clip" data-label="Ao vivo" data-reveal="card">
-            <div class="clip-media media" data-media-label="Vídeo ao vivo">
-              <video id="clip1" src="assets/show1.mp4" poster="assets/hero.jpg" aria-label="XandBap ao vivo" muted loop playsinline preload="none" data-inview></video>
-              <div class="frame-hud mono" aria-hidden="true">
-                <span><i class="rec-dot"></i>REC</span>
-                <span class="timecode" data-timecode-for="clip1">00:00:00</span>
-              </div>
+        <div class="reel" id="reel" role="group" aria-label="Vídeos e fotos ao vivo">
+          <figure data-glow class="tile is-active" data-tile data-kind="video" style="--ar: 0.5625">
+            <video id="v1" src="assets/show1.mp4#t=0.1" preload="metadata" playsinline loop aria-label="XandBap ao vivo, vídeo 1"></video>
+            <button type="button" class="tile-play" data-play="v1" aria-label="Reproduzir vídeo 1">
+              <svg class="ico" aria-hidden="true"><use href="#i-play"/></svg>
+            </button>
+            <div class="tile-bar" data-bar="v1">
+              <button type="button" class="ctl" data-toggle="v1" aria-label="Pausar"><svg class="ico i-pause" aria-hidden="true"><use href="#i-pause"/></svg><svg class="ico i-play" aria-hidden="true"><use href="#i-play"/></svg></button>
+              <button type="button" class="ctl ctl-sound" data-sound="v1" aria-label="Ativar som" aria-pressed="false"><span class="lvl" aria-hidden="true"></span><svg class="ico i-off" aria-hidden="true"><use href="#i-vol-off"/></svg><svg class="ico i-on" aria-hidden="true"><use href="#i-vol-on"/></svg></button>
+              <span class="tile-time" data-time="v1" aria-hidden="true">0:00</span>
+              <button type="button" class="ctl" data-full="v1" aria-label="Tela cheia"><svg class="ico" aria-hidden="true"><use href="#i-expand"/></svg></button>
             </div>
-            <figcaption class="clip-caption mono">
-              <span>01 — Ao vivo</span>
-              <span class="clip-buttons">
-                <button class="icon-btn" type="button" data-video-sound="clip1" aria-label="Ativar som" aria-pressed="false">
-                  <svg class="i-off" aria-hidden="true"><use href="#i-sound-off"/></svg>
-                  <svg class="i-on" aria-hidden="true"><use href="#i-sound-on"/></svg>
-                </button>
-                <button class="icon-btn" type="button" data-video-toggle="clip1" aria-label="Pausar vídeo">
-                  <svg class="i-pause" aria-hidden="true"><use href="#i-pause"/></svg>
-                  <svg class="i-play" aria-hidden="true"><use href="#i-play"/></svg>
-                </button>
-              </span>
-            </figcaption>
           </figure>
 
-          <figure class="clip clip-offset" data-label="Ao vivo" data-reveal="card">
-            <div class="clip-media media" data-media-label="Vídeo ao vivo">
-              <video id="clip2" src="assets/show2.mp4" poster="assets/show2-poster.jpg" aria-label="Pista lotada" muted loop playsinline preload="none" data-inview></video>
-              <div class="frame-hud mono" aria-hidden="true">
-                <span><i class="rec-dot"></i>REC</span>
-                <span class="timecode" data-timecode-for="clip2">00:00:00</span>
-              </div>
+          <figure data-glow class="tile" data-tile data-kind="photo" style="--ar: 0.6667">
+            <picture>
+              <source type="image/webp" srcset="assets/hero-700.webp 700w, assets/hero.webp 1100w" sizes="(min-width: 1024px) 440px, 66vw">
+              <img src="assets/hero.jpg" alt="XandBap na cabine, mixando durante um show" width="1365" height="2048" loading="lazy" decoding="async">
+            </picture>
+          </figure>
+
+          <figure data-glow class="tile" data-tile data-kind="photo" style="--ar: 0.5625">
+            <picture>
+              <source type="image/webp" srcset="assets/palco-luz-vermelha-700.webp 700w, assets/palco-luz-vermelha.webp 1100w" sizes="(min-width: 1024px) 360px, 66vw">
+              <img src="assets/palco-luz-vermelha.jpg" alt="XandBap mixando na controladora durante um set, sob luz vermelha" width="1080" height="1920" loading="lazy" decoding="async">
+            </picture>
+          </figure>
+
+          <figure data-glow class="tile" data-tile data-kind="video" style="--ar: 0.5625">
+            <video id="v2" src="assets/show2.mp4#t=0.1" preload="metadata" playsinline loop aria-label="XandBap ao vivo, vídeo 2"></video>
+            <button type="button" class="tile-play" data-play="v2" aria-label="Reproduzir vídeo 2">
+              <svg class="ico" aria-hidden="true"><use href="#i-play"/></svg>
+            </button>
+            <div class="tile-bar" data-bar="v2">
+              <button type="button" class="ctl" data-toggle="v2" aria-label="Pausar"><svg class="ico i-pause" aria-hidden="true"><use href="#i-pause"/></svg><svg class="ico i-play" aria-hidden="true"><use href="#i-play"/></svg></button>
+              <button type="button" class="ctl ctl-sound" data-sound="v2" aria-label="Ativar som" aria-pressed="false"><span class="lvl" aria-hidden="true"></span><svg class="ico i-off" aria-hidden="true"><use href="#i-vol-off"/></svg><svg class="ico i-on" aria-hidden="true"><use href="#i-vol-on"/></svg></button>
+              <span class="tile-time" data-time="v2" aria-hidden="true">0:00</span>
+              <button type="button" class="ctl" data-full="v2" aria-label="Tela cheia"><svg class="ico" aria-hidden="true"><use href="#i-expand"/></svg></button>
             </div>
-            <figcaption class="clip-caption mono">
-              <span>02 — Pista lotada</span>
-              <span class="clip-buttons">
-                <button class="icon-btn" type="button" data-video-sound="clip2" aria-label="Ativar som" aria-pressed="false">
-                  <svg class="i-off" aria-hidden="true"><use href="#i-sound-off"/></svg>
-                  <svg class="i-on" aria-hidden="true"><use href="#i-sound-on"/></svg>
-                </button>
-                <button class="icon-btn" type="button" data-video-toggle="clip2" aria-label="Pausar vídeo">
-                  <svg class="i-pause" aria-hidden="true"><use href="#i-pause"/></svg>
-                  <svg class="i-play" aria-hidden="true"><use href="#i-play"/></svg>
-                </button>
-              </span>
-            </figcaption>
+          </figure>
+
+          <figure data-glow class="tile" data-tile data-kind="photo" style="--ar: 0.5625">
+            <picture>
+              <source type="image/webp" srcset="assets/palco-telao-logo-700.webp 700w, assets/palco-telao-logo.webp 1080w" sizes="(min-width: 1024px) 360px, 66vw">
+              <img src="assets/palco-telao-logo.jpg" alt="XandBap na cabine do palco, com a logo XandBap iluminada na frente da cabine" width="1080" height="1920" loading="lazy" decoding="async">
+            </picture>
           </figure>
         </div>
       </div>
     </section>
 
-    <!-- ================= CONTRATAÇÃO ================= -->
-    <section id="contratar" class="section hire" aria-labelledby="contratarTitle">
+    <!-- ===================== CONTRATAÇÃO ===================== -->
+    <section class="section hire" id="contratacao" aria-labelledby="contratacao-t">
       <div class="wrap">
-        <div class="hire-poster" data-reveal="clip">
-          <div class="hire-glow" aria-hidden="true"></div>
-          <span class="corner tl" aria-hidden="true"></span><span class="corner tr" aria-hidden="true"></span>
-          <span class="corner bl" aria-hidden="true"></span><span class="corner br" aria-hidden="true"></span>
-          <p class="hire-vertical mono" aria-hidden="true">Contratação</p>
-
-          <p class="section-index mono"><span>(04)</span> Contratação</p>
-          <h2 class="display display-xl split" id="contratarTitle" data-reveal="lines">
-            <span class="line"><span>Leve XandBap</span></span>
-            <span class="line"><span class="accent">pro seu evento</span></span>
-          </h2>
-          <p class="lede" data-reveal>Datas, cachê e rider técnico direto com a equipe. Resposta rápida pelo WhatsApp.</p>
-
-          <ul class="hire-list mono" data-reveal="stagger">
-            <li><span>A</span>Datas</li>
-            <li><span>B</span>Cachê</li>
-            <li><span>C</span>Rider técnico</li>
-          </ul>
-
-          <div class="hire-actions" data-reveal>
-            <a href="https://wa.me/5581992777571?text=Ol%C3%A1%2C%20quero%20contratar%20o%20XandBap" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-lg magnetic">
-              <svg class="btn-icon" aria-hidden="true"><use href="#i-wa"/></svg>
-              Falar no WhatsApp
+        <div class="hire-card reveal">
+          <span class="sig sig-logo hire-mark" data-sig="view" aria-hidden="true">
+            <img src="assets/xandbap-logo.png" alt="" width="662" height="706" loading="lazy">
+          </span>
+          <div class="hire-text">
+            <p class="eyebrow">Contratação</p>
+            <h2 class="h3" id="contratacao-t">Disponível para contratações.</h2>
+            <p class="hire-note">Datas, cachê e rider técnico direto com a equipe.</p>
+          </div>
+          <div class="hire-actions">
+            <a href="https://wa.me/5581992777571?text=Ol%C3%A1%2C%20quero%20contratar%20o%20XandBap" class="pill pill-accent" target="_blank" rel="noopener noreferrer">
+              <svg class="ico" aria-hidden="true"><use href="#i-wa"/></svg>
+              Solicitar contratação
             </a>
-            <a href="mailto:contato@xandbap.com" class="link-arrow">
-              <span>contato@xandbap.com</span>
-              <svg aria-hidden="true"><use href="#i-arrow"/></svg>
-            </a>
+            <a href="https://wa.me/5581992777571?text=Ol%C3%A1%2C%20gostaria%20de%20receber%20o%20presskit%20do%20XandBap" class="pill pill-line" target="_blank" rel="noopener noreferrer">Pedir presskit</a>
+            <a href="mailto:contato@xandbap.com" class="hire-mail">contato@xandbap.com</a>
           </div>
         </div>
       </div>
@@ -457,47 +242,18 @@
 
   </main>
 
-  <!-- ================= RODAPÉ ================= -->
+  <!-- ===================== FOOTER ===================== -->
   <footer class="footer">
-    <div class="wrap">
-      <div class="footer-top">
-        <a href="#top" class="footer-logo" aria-label="Voltar ao topo">
-          <img src="assets/xandbap-logo.png" alt="XandBap" width="662" height="706" loading="lazy">
-        </a>
-        <div class="footer-cols">
-          <div>
-            <p class="mono footer-label">Navegue</p>
-            <a href="#identidade">Identidade</a>
-            <a href="#lancamentos">Lançamentos</a>
-            <a href="#palco">Ao vivo</a>
-            <a href="#contratar">Contratação</a>
-          </div>
-          <div>
-            <p class="mono footer-label">Ouça</p>
-            <a href="https://open.spotify.com/" target="_blank" rel="noopener noreferrer">Spotify</a>
-            <a href="https://www.tiktok.com/@xandbap" target="_blank" rel="noopener noreferrer">TikTok</a>
-            <a href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer">YouTube</a>
-          </div>
-          <div>
-            <p class="mono footer-label">Fale</p>
-            <a href="https://wa.me/5581992777571?text=Ol%C3%A1%2C%20quero%20contratar%20o%20XandBap" target="_blank" rel="noopener noreferrer">WhatsApp</a>
-            <a href="mailto:contato@xandbap.com">E-mail</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="footer-bar mono">
-        <p id="footer-year">@XANDBAP</p>
-        <a href="#top" class="back-top">Voltar ao topo <svg aria-hidden="true" style="transform:rotate(-90deg)"><use href="#i-arrow"/></svg></a>
-      </div>
-
-      <div class="credit">
-        <span>Feito pela</span>
-        <a href="https://www.instagram.com/results.ag" target="_blank" rel="noopener noreferrer">
-          <svg aria-hidden="true"><use href="#i-ig"/></svg>
-          <span class="text-green">results.ag</span>
-        </a>
-      </div>
+    <div class="wrap footer-in">
+      <p class="footer-copy">© <span data-year>2026</span> XandBap</p>
+      <nav class="footer-links" aria-label="Contato">
+        <a href="https://www.tiktok.com/@xandbap" target="_blank" rel="noopener noreferrer">TikTok</a>
+        <a href="https://wa.me/5581992777571" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+        <a href="mailto:contato@xandbap.com">E-mail</a>
+      </nav>
+      <p class="credit">Feito pela
+        <a href="https://www.instagram.com/results.ag" target="_blank" rel="noopener noreferrer"><svg class="ico" aria-hidden="true"><use href="#i-ig"/></svg><span>results.ag</span></a>
+      </p>
     </div>
   </footer>
 
