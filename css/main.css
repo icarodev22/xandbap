@@ -269,8 +269,6 @@ ul, ol { list-style: none; }
 }
 .shelf-ui { display: flex; align-items: center; gap: 10px; }
 .shelf-ui.is-hidden { display: none; }
-.shelf-count { font-size: 14px; color: var(--fg-2); margin-right: 8px; font-variant-numeric: tabular-nums; }
-.shelf-count span:first-child { color: var(--accent); }
 
 .shelf {
   --w: min(76vw, 360px);

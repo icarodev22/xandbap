@@ -227,11 +227,8 @@
     var items = $$('[data-release]', shelf);
     var section = shelf.closest('section');
     var ui = $('[data-shelf-ui]');
-    var idxEl = $('[data-shelf-index]'), totalEl = $('[data-shelf-total]');
     var prev = $('[data-shelf-prev]'), next = $('[data-shelf-next]');
     var current = -1;
-    var pad = function (n) { return n < 10 ? '0' + n : String(n); };
-    totalEl.textContent = pad(items.length);
     if (items.length < 2) ui.classList.add('is-hidden');
 
     // tom ambiente a partir da capa (só se a imagem for legível no canvas)
@@ -272,7 +269,6 @@
           it.classList.toggle('is-current', on);
           $$('a, button', it).forEach(function (a) { a.tabIndex = on ? 0 : -1; });
         });
-        idxEl.textContent = pad(best + 1);
         var t = tintOf(items[best]);
         if (t) section.style.setProperty('--tint', t);
       }
